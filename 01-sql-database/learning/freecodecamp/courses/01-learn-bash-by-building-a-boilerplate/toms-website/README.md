@@ -216,4 +216,4 @@ freeCodeCamp — Relational Database Certification
 
 ## Status
 
-🚧 In Progress
+✅ Completed
