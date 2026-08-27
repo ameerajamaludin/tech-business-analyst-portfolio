@@ -1,304 +1,91 @@
-# Learn Relational Databases by Building a Database of Video Game Characters
+# Learn Relational Databases by Building a Mario Database
 
-This folder contains my notes from the **Learn Relational Databases by Building a Database of Video Game Characters** workshop in freeCodeCamp's Relational Database Certification.
+This folder contains my notes from the **Learn Relational Databases by Building a Mario Database** workshop in freeCodeCamp's Relational Database Certification.
 
 ## Overview
 
-In this workshop, I learned the fundamentals of relational databases by creating and managing a PostgreSQL database containing video game character data.
+I built `mario_database` in PostgreSQL and filled it with video game characters, their details, sounds, and actions. The work moved from basic database and table operations to a normalized schema with one-to-one, one-to-many, and many-to-many relationships.
 
-The workshop introduced PostgreSQL, SQL commands, tables, columns, rows, data types, constraints, primary keys, foreign keys, and relationships between tables.
+The saved `mario_database.sql` file is the PostgreSQL dump produced from the workshop database.
 
-## PostgreSQL
-
-### Access PostgreSQL
-
-Connect to PostgreSQL using:
+## Connecting to PostgreSQL
 
 ```bash
 psql --username=freecodecamp --dbname=postgres
 ```
 
-### List Databases
+Inside `psql`, I used `\l` to list databases, `\c mario_database` to connect, `\d` to list tables, and `\d characters` to inspect a table.
 
-Use `\l` to display the available databases.
+## Database Structure
 
-```sql
-\l
-```
+| Table | Purpose | Relationship |
+| --- | --- | --- |
+| `characters` | Character name, homeland, and favorite color | Parent table |
+| `more_info` | Birthday, height, and weight | One-to-one with `characters` |
+| `sounds` | Multiple sound filenames | Many-to-one with `characters` |
+| `actions` | Available actions | Linked through `character_actions` |
+| `character_actions` | Character/action pairs | Many-to-many junction table |
 
-### Create a Database
+The junction table uses a composite primary key so the same character/action pair cannot be repeated.
 
-Use `CREATE DATABASE` to create a new database.
-
-```sql
-CREATE DATABASE database_name;
-```
-
-### Connect to a Database
-
-Use `\c` to connect to a database.
+## Creating and Changing Tables
 
 ```sql
-\c database_name
-```
+CREATE DATABASE mario_database;
+CREATE TABLE characters();
 
-## Tables
-
-A relational database organizes data into **tables**.
-
-Tables contain:
-
-* **Columns** — define the attributes or fields of the data.
-* **Rows** — contain individual records.
-
-### Create a Table
-
-```sql
-CREATE TABLE table_name();
-```
-
-### List Tables
-
-```sql
-\d
-```
-
-### View Table Details
-
-```sql
-\d table_name
-```
-
-### Rename a Table
-
-```sql
-ALTER TABLE old_name
-RENAME TO new_name;
-```
-
-### Delete a Table
-
-```sql
-DROP TABLE table_name;
-```
-
-## Columns
-
-### Add a Column
-
-```sql
-ALTER TABLE table_name
-ADD COLUMN column_name DATA_TYPE;
-```
-
-Example:
-
-```sql
 ALTER TABLE characters
-ADD COLUMN name VARCHAR(30);
+ADD COLUMN character_id SERIAL PRIMARY KEY;
+
+ALTER TABLE characters
+ADD COLUMN name VARCHAR(30) UNIQUE NOT NULL;
 ```
 
-### Rename a Column
+I used `ALTER TABLE` to add, rename, and drop columns and constraints. The workshop used `INT`, `SERIAL`, `VARCHAR`, `TEXT`, `NUMERIC`, and `DATE` for the values stored in the tables.
+
+## Rows and Queries
 
 ```sql
-ALTER TABLE table_name
-RENAME COLUMN old_name TO new_name;
+INSERT INTO characters(name, homeland, favorite_color)
+VALUES ('Mario', 'Mushroom Kingdom', 'Red');
+
+UPDATE characters
+SET favorite_color = 'Yellow'
+WHERE name = 'Bowser';
+
+DELETE FROM characters WHERE name = 'Samus';
+SELECT character_id, name FROM characters ORDER BY character_id;
 ```
 
-### Delete a Column
+`WHERE` limits an update or delete to the intended rows. `ORDER BY` controls the order of query results.
+
+## Keys and Relationships
 
 ```sql
-ALTER TABLE table_name
-DROP COLUMN column_name;
+ALTER TABLE more_info
+ADD FOREIGN KEY(character_id) REFERENCES characters(character_id);
+
+ALTER TABLE character_actions
+ADD PRIMARY KEY(character_id, action_id);
 ```
 
-## Data Types
+Primary keys identify rows, foreign keys connect related rows, and `UNIQUE` plus `NOT NULL` enforce data rules. The workshop queried relationships with `FULL JOIN`, including complete character/details and character/sounds results.
 
-Some PostgreSQL data types used in this workshop include:
+## Key Takeaways
 
-| Data Type    | Description                                |
-| ------------ | ------------------------------------------ |
-| `INT`        | Integer values                             |
-| `SERIAL`     | Auto-incrementing integer                  |
-| `VARCHAR(n)` | Variable-length text with a maximum length |
-| `TEXT`       | Variable-length text                       |
-| `NUMERIC`    | Numeric values                             |
-| `DATE`       | Date values                                |
-
-## Rows and Data
-
-### Insert Data
-
-Use `INSERT INTO` to add rows to a table.
-
-```sql
-INSERT INTO table_name(column_name)
-VALUES(value);
-```
-
-Multiple columns can be inserted at the same time:
-
-```sql
-INSERT INTO table_name(column1, column2)
-VALUES(value1, value2);
-```
-
-### View Data
-
-Use `SELECT` to retrieve data from a table.
-
-```sql
-SELECT * FROM table_name;
-```
-
-Specific columns can also be selected:
-
-```sql
-SELECT column1, column2
-FROM table_name;
-```
-
-### Update Data
-
-Use `UPDATE` to modify existing data.
-
-```sql
-UPDATE table_name
-SET column_name = value
-WHERE condition;
-```
-
-### Delete Data
-
-Use `DELETE` to remove rows.
-
-```sql
-DELETE FROM table_name
-WHERE condition;
-```
-
-## Constraints
-
-Constraints define rules for the data stored in a table.
-
-### NOT NULL
-
-`NOT NULL` prevents a column from containing null values.
-
-```sql
-ALTER TABLE table_name
-ALTER COLUMN column_name SET NOT NULL;
-```
-
-### UNIQUE
-
-`UNIQUE` prevents duplicate values in a column.
-
-```sql
-ALTER TABLE table_name
-ADD UNIQUE(column_name);
-```
-
-## Primary Keys
-
-A **primary key** uniquely identifies each row in a table.
-
-Example:
-
-```sql
-ALTER TABLE table_name
-ADD PRIMARY KEY(column_name);
-```
-
-Primary keys must contain unique, non-null values.
-
-## Foreign Keys
-
-A **foreign key** creates a relationship between two tables.
-
-```sql
-ALTER TABLE table_name
-ADD FOREIGN KEY(column_name)
-REFERENCES other_table(column_name);
-```
-
-This allows data stored in different tables to be connected.
-
-## Relationships
-
-Relational databases allow related information to be separated into different tables instead of storing everything in a single table.
-
-For example:
-
-```text
-characters
-     │
-     ├── character_id
-     ├── name
-     └── homeland_id
-              │
-              ▼
-          more_info
-```
-
-A foreign key can be used to connect related records between these tables.
-
-## SQL Commands Learned
-
-| Command           | Purpose                             |
-| ----------------- | ----------------------------------- |
-| `CREATE DATABASE` | Create a database                   |
-| `CREATE TABLE`    | Create a table                      |
-| `ALTER TABLE`     | Modify a table                      |
-| `DROP TABLE`      | Delete a table                      |
-| `ADD COLUMN`      | Add a column                        |
-| `DROP COLUMN`     | Delete a column                     |
-| `INSERT INTO`     | Add data                            |
-| `SELECT`          | Retrieve data                       |
-| `UPDATE`          | Modify existing data                |
-| `DELETE`          | Delete data                         |
-| `PRIMARY KEY`     | Uniquely identify records           |
-| `FOREIGN KEY`     | Create relationships between tables |
-| `UNIQUE`          | Prevent duplicate values            |
-| `NOT NULL`        | Require a value                     |
-
-## PostgreSQL Commands Learned
-
-| Command            | Purpose                           |
-| ------------------ | --------------------------------- |
-| `\l`               | List databases                    |
-| `\c database_name` | Connect to a database             |
-| `\d`               | List tables                       |
-| `\d table_name`    | Display information about a table |
-
-## Key Concepts
-
-Through this workshop, I learned about:
-
-* Relational databases
-* PostgreSQL
-* SQL
-* Databases
-* Tables
-* Columns and rows
-* Data types
-* CRUD operations
-* Primary keys
-* Foreign keys
-* Constraints
-* Relationships between tables
-
-## What I Learned
-
-This workshop helped me understand how relational databases organize information into related tables.
-
-I learned how to create and modify PostgreSQL databases using SQL, insert and retrieve records, apply constraints to maintain data integrity, and establish relationships between tables using primary and foreign keys.
+- A relational design separates different kinds of facts into related tables.
+- Primary, foreign, and composite keys protect the structure of those relationships.
+- Constraints reject missing or duplicate values where the model requires them.
+- `INSERT`, `SELECT`, `UPDATE`, and `DELETE` cover the core row operations.
+- Joins bring normalized data back together for reporting.
 
 ## Course
 
 **freeCodeCamp — Relational Database Certification**
 
-**Course:** Learn Relational Databases by Building a Database of Video Game Characters
+**Workshop:** Learn Relational Databases by Building a Mario Database
+
+**Topics:** PostgreSQL · SQL · Tables · Constraints · Keys · Relationships · Joins
 
 ## Status
 

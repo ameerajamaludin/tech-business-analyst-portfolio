@@ -1,3 +1,4 @@
+
 # Learn SQL by Building a Student Database: Part 1
 
 This folder contains my notes from the **Learn SQL by Building a Student Database: Part 1** workshop in freeCodeCamp's Relational Database Certification.
@@ -384,6 +385,106 @@ Instead of manually inserting every row, I learned how to:
 **Workshop:** Learn SQL by Building a Student Database: Part 1
 
 **Topics:** SQL · PostgreSQL · Bash · CSV · Relational Databases
+
+## Status
+
+✅ Completed
+=======
+# Learn SQL by Building a Student Database: Part 1
+
+This folder contains my notes from the **Learn SQL by Building a Student Database: Part 1** workshop in freeCodeCamp's Relational Database Certification.
+
+## Overview
+
+I designed a PostgreSQL database for students, majors, and courses, then wrote a Bash import script to populate it from two CSV files. This connected file processing, shell scripting, SQL queries, and relational modeling in one repeatable workflow.
+
+The folder contains the source CSV files, `insert_data.sh`, and `students.sql`, a dump that can rebuild the completed database.
+
+## Database Structure
+
+| Table | Important columns | Relationship |
+| --- | --- | --- |
+| `majors` | `major_id`, `major` | One major can have many students |
+| `courses` | `course_id`, `course` | Courses can belong to many majors |
+| `students` | `student_id`, names, `major_id`, `gpa` | Optional foreign key to `majors` |
+| `majors_courses` | `major_id`, `course_id` | Many-to-many junction table |
+
+```sql
+CREATE TABLE majors_courses (
+  major_id INT,
+  course_id INT,
+  PRIMARY KEY (major_id, course_id),
+  FOREIGN KEY (major_id) REFERENCES majors(major_id),
+  FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+```
+
+## CSV to PostgreSQL Workflow
+
+`courses.csv` contains major/course pairs. `students.csv` contains first name, last name, major, and GPA. Each file is piped into a loop:
+
+```bash
+cat courses.csv | while IFS="," read MAJOR COURSE
+do
+  # look up IDs and insert missing records
+done
+```
+
+`IFS=","` tells `read` to split each CSV row at commas. The header is skipped by checking its first field.
+
+## Running SQL from Bash
+
+```bash
+PSQL="psql -X --username=freecodecamp --dbname=students --no-align --tuples-only -c"
+MAJOR_ID=$($PSQL "SELECT major_id FROM majors WHERE major='$MAJOR'")
+```
+
+The `PSQL` variable keeps connection flags in one place. Command substitution, `$()`, captures a query result so the script can test or reuse an ID.
+
+## Conditional Inserts
+
+```bash
+if [[ -z $MAJOR_ID ]]
+then
+  INSERT_MAJOR_RESULT=$($PSQL "INSERT INTO majors(major) VALUES('$MAJOR')")
+  MAJOR_ID=$($PSQL "SELECT major_id FROM majors WHERE major='$MAJOR'")
+fi
+```
+
+The script checks for a major or course before inserting it. After retrieving their generated IDs, it inserts the relationship into `majors_courses` and then inserts students with the correct `major_id`.
+
+CSV text containing `null` must become unquoted SQL `NULL`:
+
+```bash
+if [[ $MAJOR == "null" ]]
+then
+  MAJOR_ID="NULL"
+fi
+```
+
+## Resetting and Exporting
+
+The workshop used `TRUNCATE ... CASCADE` while testing the importer and `pg_dump` to save the completed database:
+
+```bash
+pg_dump -cC --inserts -U freecodecamp students > students.sql
+```
+
+## Key Takeaways
+
+- CSV rows can drive database inserts through `while read` and a custom `IFS`.
+- IDs connect normalized records without repeating descriptive values.
+- Conditional lookups prevent duplicate majors, courses, and relationships.
+- SQL `NULL` must not be quoted as ordinary text.
+- A database dump makes the schema and populated data reproducible.
+
+## Course
+
+**freeCodeCamp — Relational Database Certification**
+
+**Workshop:** Learn SQL by Building a Student Database: Part 1
+
+**Topics:** SQL · PostgreSQL · Bash · CSV · Foreign keys · Data import
 
 ## Status
 
