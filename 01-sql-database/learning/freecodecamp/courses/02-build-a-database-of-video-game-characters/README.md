@@ -302,4 +302,4 @@ I learned how to create and modify PostgreSQL databases using SQL, insert and re
 
 ## Status
 
-🚧 In Progress
+✅ Completed
