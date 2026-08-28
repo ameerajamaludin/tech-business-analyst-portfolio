@@ -2,9 +2,17 @@
 
 This folder documents my progress through freeCodeCamp's **Relational Database** curriculum as part of refreshing and strengthening my technical foundation in databases, SQL, Bash, and related development tools.
 
-I completed all learning modules, workshops, and the required projects in the curriculum.
+**Topics:** Bash · Linux · PostgreSQL · SQL · Relational Databases · Data Modelling · Shell Scripting · Text Processing · Nano · Git
 
-> **Certification status:** Completed the Relational Databases Certification Exam — currently awaiting the result.
+**Learning modules:** ✅ Completed
+
+**Workshops:** ✅ Completed
+
+**Projects:** ✅ Completed
+
+**Certification exam:** ✅ Completed
+
+**Certification result:** ⏳ Awaiting result
 
 ## Projects
 
@@ -30,7 +38,7 @@ Throughout the curriculum, I worked with:
 * Unix text-processing tools and pipelines
 * Git fundamentals, branching, merging, rebasing, stashing, and history management
 
-One of the most useful parts of the curriculum was seeing how these tools work together rather than learning them in isolation — particularly using Bash and SQL to build small database-backed applications and repeatable data workflows.
+> One of the most useful parts of the curriculum was seeing how these tools work together rather than learning them in isolation — particularly using Bash and SQL to build small database-backed applications and repeatable data workflows.
 
 ---
 
@@ -142,9 +150,9 @@ Commands can therefore be combined into small processing pipelines without creat
 
 ---
 
-# 3. Bash Scripting
+## 3. Bash Scripting
 
-## Script Basics
+### Script Basics
 
 A Bash script starts with a shebang:
 
@@ -164,7 +172,7 @@ Run it:
 ./script.sh
 ```
 
-## Variables
+### Variables
 
 ```bash
 NAME="Ameera"
@@ -173,7 +181,7 @@ echo "$NAME"
 
 Access a variable by prefixing its name with `$`.
 
-## User Input
+### User Input
 
 ```bash
 read NAME
@@ -182,7 +190,7 @@ echo "Hello $NAME"
 
 `read` stores user input in a variable.
 
-## Script Arguments
+### Script Arguments
 
 ```bash
 ./countdown.sh 5
@@ -206,7 +214,7 @@ $?
 
 An exit status of `0` normally indicates success.
 
-## Conditional Logic
+### Conditional Logic
 
 ```bash
 if [[ $1 =~ ^[0-9]+$ ]]
@@ -233,7 +241,7 @@ Useful tests include:
 
 `[[ ... ]]` evaluates tests and regular expressions.
 
-## Arithmetic
+### Arithmetic
 
 Arithmetic expressions can use double parentheses:
 
@@ -243,9 +251,9 @@ NUMBER=$(( RANDOM % 75 + 1 ))
 
 `$RANDOM` provides a pseudo-random integer.
 
-## Loops
+### Loops
 
-### for
+#### for
 
 ```bash
 for (( i=5; i>=0; i-- ))
@@ -254,7 +262,7 @@ do
 done
 ```
 
-### while
+#### while
 
 ```bash
 while [[ condition ]]
@@ -263,7 +271,7 @@ do
 done
 ```
 
-### until
+#### until
 
 ```bash
 until [[ condition ]]
@@ -272,7 +280,7 @@ do
 done
 ```
 
-## Functions
+### Functions
 
 ```bash
 GET_FORTUNE() {
@@ -282,7 +290,7 @@ GET_FORTUNE() {
 
 Functions group reusable behavior and can receive positional arguments in the same way as scripts.
 
-## Arrays
+### Arrays
 
 ```bash
 RESPONSES=("Yes" "No" "Maybe")
@@ -295,9 +303,9 @@ Arrays are useful when a script needs to store multiple related values.
 
 ---
 
-# 4. PostgreSQL Basics
+## 4. PostgreSQL Basics
 
-## Connecting to PostgreSQL
+### Connecting to PostgreSQL
 
 ```bash
 psql --username=freecodecamp --dbname=postgres
@@ -312,13 +320,13 @@ Useful `psql` commands:
 | `\d`               | List relations/tables |
 | `\d table_name`    | Inspect a table       |
 
-## Creating a Database
+### Creating a Database
 
 ```sql
 CREATE DATABASE mario_database;
 ```
 
-## Creating Tables
+### Creating Tables
 
 ```sql
 CREATE TABLE characters();
@@ -336,7 +344,7 @@ ALTER TABLE characters
 ADD COLUMN name VARCHAR(30) UNIQUE NOT NULL;
 ```
 
-## Common Data Types
+### Common Data Types
 
 | Type         | Purpose                   |
 | ------------ | ------------------------- |
@@ -350,11 +358,11 @@ ADD COLUMN name VARCHAR(30) UNIQUE NOT NULL;
 
 ---
 
-# 5. Relational Database Design
+## 5. Relational Database Design
 
 A relational database separates different types of information into tables and connects them using keys.
 
-## Primary Keys
+### Primary Keys
 
 A primary key uniquely identifies each row.
 
@@ -362,7 +370,7 @@ A primary key uniquely identifies each row.
 character_id SERIAL PRIMARY KEY
 ```
 
-## Foreign Keys
+### Foreign Keys
 
 A foreign key references a row in another table.
 
@@ -372,7 +380,7 @@ ADD FOREIGN KEY(character_id)
 REFERENCES characters(character_id);
 ```
 
-## Constraints
+### Constraints
 
 Common constraints include:
 
@@ -383,7 +391,7 @@ Common constraints include:
 | `UNIQUE`      | Prevent duplicate values |
 | `NOT NULL`    | Require a value          |
 
-## Relationships
+### Relationships
 
 ### One-to-One
 
@@ -395,7 +403,7 @@ Example:
 characters ─── more_info
 ```
 
-### One-to-Many
+#### One-to-Many
 
 One parent can have multiple child records.
 
@@ -405,7 +413,7 @@ Example:
 characters ───< sounds
 ```
 
-### Many-to-Many
+#### Many-to-Many
 
 A junction table connects two tables.
 
@@ -427,7 +435,7 @@ PRIMARY KEY(character_id, action_id)
 
 ---
 
-# 6. CRUD Operations
+## 6. CRUD Operations
 
 CRUD represents the core operations performed on stored data:
 
@@ -438,21 +446,21 @@ Update
 Delete
 ```
 
-## INSERT
+### INSERT
 
 ```sql
 INSERT INTO characters(name, homeland, favorite_color)
 VALUES ('Mario', 'Mushroom Kingdom', 'Red');
 ```
 
-## SELECT
+### SELECT
 
 ```sql
 SELECT character_id, name
 FROM characters;
 ```
 
-## UPDATE
+### UPDATE
 
 ```sql
 UPDATE characters
@@ -460,7 +468,7 @@ SET favorite_color = 'Yellow'
 WHERE name = 'Bowser';
 ```
 
-## DELETE
+### DELETE
 
 ```sql
 DELETE FROM characters
@@ -471,9 +479,9 @@ WHERE name = 'Samus';
 
 ---
 
-# 7. Querying and Filtering Data
+## 7. Querying and Filtering Data
 
-## WHERE
+### WHERE
 
 ```sql
 SELECT first_name, last_name, gpa
@@ -506,7 +514,7 @@ IS NULL
 IS NOT NULL
 ```
 
-## Pattern Matching
+### Pattern Matching
 
 ```sql
 SELECT course
@@ -527,7 +535,7 @@ WHERE course ILIKE '%a%';
 | `LIKE`  | Pattern matching                  |
 | `ILIKE` | Case-insensitive pattern matching |
 
-## Ordering Results
+### Ordering Results
 
 ```sql
 SELECT first_name, last_name, gpa
@@ -535,7 +543,7 @@ FROM students
 ORDER BY gpa DESC, first_name;
 ```
 
-## Limiting Results
+### Limiting Results
 
 ```sql
 SELECT *
@@ -545,7 +553,7 @@ LIMIT 10;
 
 ---
 
-# 8. Aggregate Queries
+## 8. Aggregate Queries
 
 Aggregate functions summarize multiple rows.
 
@@ -560,7 +568,7 @@ Aggregate functions summarize multiple rows.
 | `CEIL`     | Round upward          |
 | `DISTINCT` | Return unique values  |
 
-## GROUP BY
+### GROUP BY
 
 ```sql
 SELECT major_id, COUNT(*) AS number_of_students
@@ -570,7 +578,7 @@ GROUP BY major_id;
 
 `GROUP BY` changes the level at which an aggregate is calculated.
 
-## HAVING
+### HAVING
 
 ```sql
 SELECT major_id, COUNT(*)
@@ -588,7 +596,7 @@ HAVING → filters groups
 
 ---
 
-# 9. SQL Joins
+## 9. SQL Joins
 
 Joins combine related rows from multiple tables.
 
@@ -626,7 +634,7 @@ courses
 
 ---
 
-# 10. Importing CSV Data with Bash and PostgreSQL
+## 10. Importing CSV Data with Bash and PostgreSQL
 
 The Student Database workshop combined Bash and SQL to populate PostgreSQL from:
 
@@ -635,7 +643,7 @@ courses.csv
 students.csv
 ```
 
-## Reading CSV Rows
+### Reading CSV Rows
 
 ```bash
 cat courses.csv | while IFS="," read MAJOR COURSE
@@ -647,7 +655,7 @@ done
 
 `IFS=","` tells Bash to split each input row at commas.
 
-## Running PostgreSQL from Bash
+### Running PostgreSQL from Bash
 
 ```bash
 PSQL="psql -X --username=freecodecamp --dbname=students --no-align --tuples-only -c"
@@ -659,7 +667,7 @@ Then:
 $PSQL "SELECT * FROM majors;"
 ```
 
-## Command Substitution
+### Command Substitution
 
 ```bash
 MAJOR_ID=$($PSQL "SELECT major_id FROM majors WHERE major='$MAJOR'")
@@ -667,7 +675,7 @@ MAJOR_ID=$($PSQL "SELECT major_id FROM majors WHERE major='$MAJOR'")
 
 `$()` executes the command and stores its output.
 
-## Conditional Inserts
+### Conditional Inserts
 
 ```bash
 if [[ -z $MAJOR_ID ]]
@@ -678,7 +686,7 @@ fi
 
 This allows an import script to check whether a record already exists before inserting it.
 
-## Handling NULL
+### Handling NULL
 
 SQL `NULL` represents a missing or unknown value.
 
@@ -696,7 +704,7 @@ because the quoted version is ordinary text.
 
 ---
 
-# 11. Bash and PostgreSQL Applications
+## 11. Bash and PostgreSQL Applications
 
 The Bike Rental Shop combined Bash program flow with persistent PostgreSQL data.
 
@@ -717,7 +725,7 @@ MAIN_MENU
 └── EXIT
 ```
 
-## Querying from Bash
+### Querying from Bash
 
 ```bash
 AVAILABLE_BIKES=$(
@@ -728,7 +736,7 @@ AVAILABLE_BIKES=$(
 )
 ```
 
-## Renting
+### Renting
 
 The rental flow:
 
@@ -748,7 +756,7 @@ SET available = false
 WHERE bike_id = 3;
 ```
 
-## Returning
+### Returning
 
 Returning a bike updates both the rental and inventory state:
 
@@ -766,9 +774,9 @@ This demonstrated how application logic and database state need to remain consis
 
 ---
 
-# 12. Text Processing
+## 12. Text Processing
 
-## wc
+### wc
 
 ```bash
 wc -l < file.txt
@@ -782,7 +790,7 @@ wc -m < file.txt
 | `-w` | Words      |
 | `-m` | Characters |
 
-## grep
+### grep
 
 ```bash
 grep -o 'cat[a-z]*' kitty_ipsum_1.txt
@@ -795,7 +803,7 @@ grep -n 'meow[a-z]*' kitty_ipsum_2.txt
 | `-n` | Include line numbers             |
 | `-E` | Use extended regular expressions |
 
-## sed
+### sed
 
 ```bash
 sed -E 's/cat|catnip/dog/g'
@@ -805,7 +813,7 @@ sed -E 's/cat|catnip/dog/g'
 
 The `g` flag replaces every matching occurrence on a line.
 
-## diff
+### diff
 
 ```bash
 diff --color original.txt translated.txt
@@ -815,7 +823,7 @@ diff --color original.txt translated.txt
 
 ---
 
-# 13. Nano
+## 13. Nano
 
 Nano is a terminal-based text editor.
 
@@ -823,7 +831,7 @@ Nano is a terminal-based text editor.
 nano castle.sh
 ```
 
-## Common Shortcuts
+### Common Shortcuts
 
 | Shortcut   | Action           |
 | ---------- | ---------------- |
@@ -853,15 +861,15 @@ Edit → Save → Exit → Run → Inspect → Edit again
 
 ---
 
-# 14. Git Fundamentals
+## 14. Git Fundamentals
 
-## Initialize a Repository
+### Initialize a Repository
 
 ```bash
 git init
 ```
 
-## Check Repository State
+### Check Repository State
 
 ```bash
 git status
@@ -877,19 +885,19 @@ Staging area
 Commit history
 ```
 
-## Inspect Changes
+### Inspect Changes
 
 ```bash
 git diff
 ```
 
-## Stage Changes
+### Stage Changes
 
 ```bash
 git add file.txt
 ```
 
-## Commit
+### Commit
 
 ```bash
 git commit -m "feat: add feature"
@@ -897,43 +905,43 @@ git commit -m "feat: add feature"
 
 ---
 
-# 15. Git Branches and Merges
+## 15. Git Branches and Merges
 
-## Create a Branch
+### Create a Branch
 
 ```bash
 git checkout -b feat/add-feature
 ```
 
-## List Branches
+### List Branches
 
 ```bash
 git branch
 ```
 
-## Switch Branch
+### Switch Branch
 
 ```bash
 git checkout main
 ```
 
-## Merge
+### Merge
 
 ```bash
 git merge feat/add-feature
 ```
 
-## Delete a Branch
+### Delete a Branch
 
 ```bash
 git branch -d feat/add-feature
 ```
 
-Branches isolate work until it is ready to be integrated.
+> Branches isolate work until it is ready to be integrated.
 
 ---
 
-# 16. Inspecting Git History
+## 16. Inspecting Git History
 
 ```bash
 git log --oneline
@@ -944,7 +952,7 @@ git show HEAD~1
 
 ---
 
-# 17. Git Stash
+## 17. Git Stash
 
 Stashing temporarily stores unfinished changes.
 
@@ -967,7 +975,7 @@ Useful operations include:
 
 ---
 
-# 18. Git Rebase and Squash
+## 18. Git Rebase and Squash
 
 ```bash
 git rebase main
@@ -994,9 +1002,9 @@ This is the same workflow used when a rebase stops because two commits changed t
 
 ---
 
-# 19. Undoing Git Changes
+## 19. Undoing Git Changes
 
-## Reset
+### Reset
 
 ```bash
 git reset HEAD~1
@@ -1004,7 +1012,7 @@ git reset HEAD~1
 
 `reset` can move the current branch pointer backward and is useful when editing local history.
 
-## Revert
+### Revert
 
 ```bash
 git revert HEAD
@@ -1021,7 +1029,7 @@ revert → adds a new commit that undoes an old one
 
 ---
 
-# 20. `.gitignore` and Secrets
+## 20. `.gitignore` and Secrets
 
 Files that should not be tracked can be listed in:
 
@@ -1046,7 +1054,7 @@ This prevents local secrets from accidentally becoming part of repository histor
 
 ---
 
-# 21. SQL Reference
+## 21. SQL Reference
 
 The Git workshop also used a JSON object as a reusable SQL command reference.
 
@@ -1094,23 +1102,4 @@ CSV / User Input
        ↓
  Bash / Output
 ```
-
 This helped me understand how individual commands and concepts can be combined into repeatable workflows.
-
----
-
-## Curriculum
-
-**freeCodeCamp — Relational Database**
-
-**Topics:** Bash · Linux · PostgreSQL · SQL · Relational Databases · Data Modelling · Shell Scripting · Text Processing · Nano · Git
-
-**Learning modules:** ✅ Completed
-
-**Workshops:** ✅ Completed
-
-**Projects:** ✅ Completed
-
-**Certification exam:** ✅ Completed
-
-**Certification result:** ⏳ Awaiting result
