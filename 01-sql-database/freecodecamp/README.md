@@ -2,9 +2,7 @@
 
 This folder documents my progress through freeCodeCamp's **Relational Database** curriculum as part of refreshing and strengthening my technical foundation in databases, SQL, Bash, and related development tools.
 
-I completed all learning modules and workshops in the curriculum, with hands-on exercises covering PostgreSQL, SQL, relational database design, Bash scripting, Linux terminal workflows, Git, and database-backed applications.
-
-I also completed the five required projects, which are included in this folder as part of my learning record.
+I completed all learning modules, workshops, and the required projects in the curriculum.
 
 > **Certification status:** Completed the Relational Databases Certification Exam — currently awaiting the result.
 
