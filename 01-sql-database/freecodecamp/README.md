@@ -1,8 +1,48 @@
-# Relational Database Notes
+# freeCodeCamp — Relational Database
 
-This file consolidates my notes from the workshops completed as part of freeCodeCamp's **Relational Database Certification**.
+This folder documents my progress through freeCodeCamp's **Relational Database** curriculum as part of refreshing and strengthening my technical foundation in databases, SQL, Bash, and related development tools.
 
-The workshops covered Bash and the Linux terminal, PostgreSQL, SQL, relational database design, Bash scripting, text processing, Nano, and Git.
+I completed all learning modules and workshops in the curriculum, with hands-on exercises covering PostgreSQL, SQL, relational database design, Bash scripting, Linux terminal workflows, Git, and database-backed applications.
+
+I also completed the five required projects, which are included in this folder as part of my learning record.
+
+> **Certification status:** Completed the Relational Databases Certification Exam — currently awaiting the result.
+
+## Projects
+
+| #  | Project                                                                      | Focus                                                                                |
+| -- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 01 | [Celestial Bodies Database](./project-01-lab-celestial-bodies-database/)     | PostgreSQL, relational database design, tables, keys, constraints, and relationships |
+| 02 | [World Cup Database](./project-02-lab-world-cup-database/)                   | PostgreSQL, SQL queries, Bash scripting, and structured data imports                 |
+| 03 | [Salon Appointment Scheduler](./project-03-lab-salon-appointment-scheduler/) | Bash, PostgreSQL, user input, database queries, and interactive application flow     |
+| 04 | [Periodic Table Database](./project-04-lab-periodic-table-database/)         | PostgreSQL database maintenance, Bash scripting, Git, and relational queries         |
+| 05 | [Number Guessing Game](./project-05-lab-number-guessing-game/)               | Bash scripting, PostgreSQL persistence, user records, and program logic              |
+
+## What I Covered
+
+Throughout the curriculum, I worked with:
+
+* PostgreSQL and relational database fundamentals
+* SQL for creating, modifying, querying, joining, and aggregating data
+* Primary keys, foreign keys, constraints, and relational data modelling
+* Bash and Linux command-line workflows
+* Bash scripting, variables, conditionals, loops, functions, and user input
+* Connecting Bash scripts to PostgreSQL
+* CSV imports and data processing
+* Unix text-processing tools and pipelines
+* Git fundamentals, branching, merging, rebasing, stashing, and history management
+
+One of the most useful parts of the curriculum was seeing how these tools work together rather than learning them in isolation — particularly using Bash and SQL to build small database-backed applications and repeatable data workflows.
+
+---
+
+# Learning Notes
+
+The sections below are my compiled notes from the learning modules and workshops completed throughout the freeCodeCamp Relational Database curriculum.
+
+I keep these as a personal reference for the concepts, commands, syntax, and workflows I practiced during the program.
+
+> These are my own condensed learning notes based on the concepts and exercises I worked through.
 
 ## 1. Bash and the Linux Terminal
 
@@ -1034,18 +1074,18 @@ This reinforced SQL commands while Git was used to track each change to the refe
 
 # Key Takeaways
 
-Across the workshops, I learned how the tools fit together rather than treating them as isolated topics:
+Across the curriculum, I learned how the tools fit together rather than treating them as isolated topics:
 
 * **Bash** provides command-line navigation, scripting, automation, validation, and program flow.
 * **PostgreSQL** stores structured and persistent application data.
 * **SQL** defines, modifies, queries, aggregates, and connects relational data.
-* **Primary and foreign keys** define relationships and protect relational integrity.
-* **Bash + SQL** can automate imports, reports, and interactive database-backed programs.
+* **Primary and foreign keys** define relationships and help maintain relational integrity.
+* **Bash + SQL** can be used together to automate imports, queries, and interactive database-backed programs.
 * **Unix text tools** such as `grep`, `sed`, and `wc` can be connected through pipes and redirection.
 * **Nano** provides a lightweight terminal editing workflow.
-* **Git** tracks changes and provides branching, merging, conflict resolution, stashing, rebasing, and safe history management.
+* **Git** provides version control through commits, branching, merging, conflict resolution, stashing, and rebasing.
 
-The most useful pattern across the certification was combining small tools:
+A recurring pattern throughout the curriculum was:
 
 ```text
 CSV / User Input
@@ -1058,12 +1098,14 @@ CSV / User Input
        ↓
  Query Results
        ↓
- Bash / Reports
+ Bash / Output
 ```
 
-This turns individual commands into repeatable workflows.
+This helped me understand how individual commands and concepts can be combined into repeatable workflows.
 
-# Workshops
+---
+
+# Workshops Completed
 
 1. Learn Bash by Building a Boilerplate
 2. Learn Relational Databases by Building a Mario Database
@@ -1075,12 +1117,16 @@ This turns individual commands into repeatable workflows.
 8. Learn Nano by Building a Castle
 9. Learn Git by Building an SQL Reference Object
 
-# Course
+---
 
-**freeCodeCamp — Relational Database Certification**
+## Curriculum
 
-**Topics:** Bash · Linux · PostgreSQL · SQL · Relational Databases · Data Modeling · Shell Scripting · Text Processing · Nano · Git
+**freeCodeCamp — Relational Database**
 
-## Status
+**Topics:** Bash · Linux · PostgreSQL · SQL · Relational Databases · Data Modelling · Shell Scripting · Text Processing · Nano · Git
 
-✅ All Workshops Completed
+**Learning modules:** ✅ Completed
+**Workshops:** ✅ Completed
+**Projects:** ✅ 5/5 Completed
+**Certification exam:** ✅ Completed
+**Certification result:** ⏳ Awaiting result
