@@ -36,11 +36,7 @@ One of the most useful parts of the curriculum was seeing how these tools work t
 
 # Learning Notes
 
-The sections below are my compiled notes from the learning modules and workshops completed throughout the freeCodeCamp Relational Database curriculum.
-
-I keep these as a personal reference for the concepts, commands, syntax, and workflows I practiced during the program.
-
-> These are my own condensed learning notes based on the concepts and exercises I worked through.
+The sections below are my compiled notes from the learning modules and workshops completed throughout the freeCodeCamp Relational Database curriculum. I keep these as a personal reference for the concepts, commands, syntax, and workflows I practiced during the program.
 
 ## 1. Bash and the Linux Terminal
 
@@ -1103,20 +1099,6 @@ This helped me understand how individual commands and concepts can be combined i
 
 ---
 
-# Workshops Completed
-
-1. Learn Bash by Building a Boilerplate
-2. Learn Relational Databases by Building a Mario Database
-3. Learn Bash Scripting by Building Five Programs
-4. Learn SQL by Building a Student Database: Part 1
-5. Learn SQL by Building a Student Database: Part 2
-6. Learn Advanced Bash by Building a Kitty Ipsum Translator
-7. Learn Bash and SQL by Building a Bike Rental Shop
-8. Learn Nano by Building a Castle
-9. Learn Git by Building an SQL Reference Object
-
----
-
 ## Curriculum
 
 **freeCodeCamp — Relational Database**
@@ -1124,7 +1106,11 @@ This helped me understand how individual commands and concepts can be combined i
 **Topics:** Bash · Linux · PostgreSQL · SQL · Relational Databases · Data Modelling · Shell Scripting · Text Processing · Nano · Git
 
 **Learning modules:** ✅ Completed
+
 **Workshops:** ✅ Completed
-**Projects:** ✅ 5/5 Completed
+
+**Projects:** ✅ Completed
+
 **Certification exam:** ✅ Completed
+
 **Certification result:** ⏳ Awaiting result
