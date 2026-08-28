@@ -23,7 +23,7 @@ The project involves:
 
 ## Database Structure
 
-The database uses three related tables to store information about chemical elements.
+The database contains three tables:
 
 ### `elements`
 
@@ -58,6 +58,8 @@ Stores the available classifications for elements.
 
 ## Database Relationships
 
+The database separates element identity, physical properties, and classifications into related tables:
+
 ```text
 elements
 └── atomic_number
@@ -69,9 +71,9 @@ elements
                             └──── types.type_id
 ```
 
-The structure separates element identity, physical properties, and element classifications into related tables.
+The `properties` table connects an element to its physical properties and classification.
 
-This reduces unnecessary duplication and allows the application to combine the required information through SQL joins.
+This structure reduces unnecessary duplication while allowing the application to reconstruct complete element information through SQL joins.
 
 ## Element Lookup
 
@@ -101,17 +103,40 @@ An element can be searched using:
 ./element.sh Hydrogen
 ```
 
-Each of these searches retrieves the corresponding element from the database.
+Each search retrieves the corresponding element from the database.
+
+The lookup flow can be represented as:
+
+```text
+Command-line argument
+        │
+        ↓
+    element.sh
+        │
+        ↓
+Search by:
+├── Atomic number
+├── Symbol
+└── Name
+        │
+        ↓
+PostgreSQL query
+        │
+        ↓
+Element information
+```
 
 ## Example Output
+
+A successful search returns the element information as a readable sentence:
 
 ```text
 The element with atomic number 1 is Hydrogen (H). It's a nonmetal, with a mass of 1.008 amu. Hydrogen has a melting point of -259.1 celsius and a boiling point of -252.9 celsius.
 ```
 
-The output combines information from the `elements`, `properties`, and `types` tables into a readable description.
+The output combines information from the `elements`, `properties`, and `types` tables.
 
-## SQL Query
+## SQL Example: Element Lookup
 
 The application retrieves element information using joins between the three related tables:
 
@@ -134,11 +159,19 @@ WHERE e.atomic_number::VARCHAR = '$1'
    OR e.name = '$1';
 ```
 
-This query allows the same command-line argument to match an element by its atomic number, symbol, or name.
+The query:
+
+1. Retrieves the element's identifying information from `elements`.
+2. Joins `properties` using `atomic_number`.
+3. Joins `types` using `type_id`.
+4. Checks the command-line argument against the atomic number, symbol, or name.
+5. Returns the combined element information when a match is found.
+
+This allows the same command-line argument to support three different types of element lookup.
 
 ## Input Handling
 
-The application handles several possible user inputs.
+The application handles both missing arguments and searches that do not match an element in the database.
 
 ### Missing Argument
 
@@ -189,7 +222,7 @@ periodic-table-database/
 
 ### `element.sh`
 
-Command-line application responsible for:
+Contains the command-line application logic, including:
 
 * Accepting an element as an argument
 * Querying PostgreSQL
@@ -226,13 +259,32 @@ Through this project, I practiced:
 
 ## Key Takeaway
 
-This project demonstrates how a normalized relational database can be connected to a simple command-line application.
+The main lesson from this project was understanding how a normalized relational database can work together with a command-line application to retrieve information from multiple related tables.
 
-Rather than storing all information about an element in a single table, the database separates element identity, physical properties, and classifications into related tables.
+Rather than storing all information about an element in a single table, the database separates the data into three areas:
 
-The Bash application then uses SQL joins to reconstruct the information when a user searches for an element.
+```text
+elements
+   │
+   │  Element identity
+   ↓
+properties
+   │
+   │  Physical properties
+   ↓
+types
+      Element classification
+```
 
-This helped reinforce the relationship between **database design, SQL querying, and application logic**.
+The Bash application then uses SQL joins to reconstruct the complete information when a user searches for an element.
+
+For example, a search for `Hydrogen` does not require all of its information to exist in one database record. The application can retrieve the element's identity from `elements`, its physical properties from `properties`, and its classification from `types`.
+
+This reduces unnecessary duplication while keeping the data logically organized.
+
+The project also demonstrated how command-line arguments can be passed from Bash into SQL queries, allowing one application command to search the database using multiple identifiers.
+
+This helped reinforce how **database normalization, relational database design, SQL joins, Bash scripting, and command-line input can work together in a simple data retrieval application**.
 
 ## Acknowledgements
 

@@ -1,12 +1,94 @@
 # Celestial Bodies Database
 
-A PostgreSQL relational database project completed as part of the freeCodeCamp **Relational Databases** curriculum.
+A PostgreSQL relational database project completed as part of the [freeCodeCamp Relational Database Certification](https://www.freecodecamp.org/learn/relational-databases-v9/lab-celestial-bodies-database/lab-celestial-bodies-database).
 
-The project models a simplified universe containing galaxies, stars, planets, and moons. I completed the original project in freeCodeCamp and then recreated the database locally using PostgreSQL and VS Code to reinforce my understanding of relational database design, SQL constraints, foreign keys, and multi-table queries.
+The project models a simplified universe containing galaxies, stars, planets, moons, and constellations. I completed the original project in freeCodeCamp and then recreated the database locally using PostgreSQL and VS Code to reinforce my understanding of relational database design, SQL constraints, foreign keys, and multi-table queries.
 
 ## Project Overview
 
-The database is structured around the relationship:
+The goal of this project was to practice designing and working with a relational PostgreSQL database containing multiple connected entities.
+
+The project involves:
+
+* Creating a PostgreSQL database and multiple related tables
+* Defining primary and foreign key relationships
+* Creating one-to-many relationships between tables
+* Applying `NOT NULL` and `UNIQUE` constraints
+* Working with PostgreSQL data types
+* Inserting and querying relational data
+* Joining multiple related tables
+* Sorting query results
+* Exporting and restoring a PostgreSQL database
+
+## Database Structure
+
+The database contains five tables:
+
+### `galaxy`
+
+Stores information about galaxies.
+
+| Column                     | Description                          |
+| -------------------------- | ------------------------------------ |
+| `galaxy_id`                | Primary key and unique identifier    |
+| `name`                     | Unique galaxy name                   |
+| `description`              | Description of the galaxy            |
+| `age_in_millions_of_years` | Approximate age in millions of years |
+| `distance_from_earth`      | Distance from Earth                  |
+| `is_spherical`             | Indicates whether it is spherical    |
+
+### `star`
+
+Stores stars and connects each star to a galaxy.
+
+| Column                     | Description                             |
+| -------------------------- | --------------------------------------- |
+| `star_id`                  | Primary key and unique identifier       |
+| `name`                     | Unique star name                        |
+| `galaxy_id`                | Foreign key referencing `galaxy`        |
+| `age_in_millions_of_years` | Approximate age in millions of years    |
+| `temperature_kelvin`       | Temperature measured in Kelvin          |
+| `is_spherical`             | Indicates whether the star is spherical |
+
+### `planet`
+
+Stores planets and connects each planet to a star.
+
+| Column                | Description                                |
+| --------------------- | ------------------------------------------ |
+| `planet_id`           | Primary key and unique identifier          |
+| `name`                | Unique planet name                         |
+| `star_id`             | Foreign key referencing `star`             |
+| `orbital_period_days` | Orbital period measured in days            |
+| `number_of_moons`     | Number of moons associated with the planet |
+| `has_life`            | Indicates whether the planet has life      |
+
+### `moon`
+
+Stores moons and connects each moon to a planet.
+
+| Column         | Description                             |
+| -------------- | --------------------------------------- |
+| `moon_id`      | Primary key and unique identifier       |
+| `name`         | Unique moon name                        |
+| `planet_id`    | Foreign key referencing `planet`        |
+| `diameter_km`  | Diameter measured in kilometres         |
+| `is_spherical` | Indicates whether the moon is spherical |
+| `description`  | Description of the moon                 |
+
+### `constellation`
+
+Stores basic information about constellations.
+
+| Column             | Description                             |
+| ------------------ | --------------------------------------- |
+| `constellation_id` | Primary key and unique identifier       |
+| `name`             | Unique constellation name               |
+| `abbreviation`     | Abbreviation used for the constellation |
+
+## Database Relationships
+
+The primary hierarchy of the database is:
 
 ```text
 Galaxy
@@ -18,9 +100,7 @@ Galaxy
               └── Moon
 ```
 
-A fifth table, `constellation`, was also created to meet the project requirements.
-
-The main relationships are:
+The corresponding foreign key relationships are:
 
 ```text
 galaxy.galaxy_id
@@ -39,75 +119,13 @@ planet.planet_id
 moon.planet_id
 ```
 
-This means:
+This creates several one-to-many relationships:
 
-* a galaxy can contain multiple stars
-* a star can have multiple planets
-* a planet can have multiple moons
+* A galaxy can contain multiple stars.
+* A star can have multiple planets.
+* A planet can have multiple moons.
 
-## Database Structure
-
-### `galaxy`
-
-Stores information about galaxies.
-
-Key fields include:
-
-* `galaxy_id` — Primary Key
-* `name` — Unique galaxy name
-* `description`
-* `age_in_millions_of_years`
-* `distance_from_earth`
-* `is_spherical`
-
-### `star`
-
-Stores stars and connects each star to a galaxy.
-
-Key fields include:
-
-* `star_id` — Primary Key
-* `name` — Unique star name
-* `galaxy_id` — Foreign Key → `galaxy.galaxy_id`
-* `age_in_millions_of_years`
-* `temperature_kelvin`
-* `is_spherical`
-
-### `planet`
-
-Stores planets and connects each planet to a star.
-
-Key fields include:
-
-* `planet_id` — Primary Key
-* `name` — Unique planet name
-* `star_id` — Foreign Key → `star.star_id`
-* `orbital_period_days`
-* `number_of_moons`
-* `has_life`
-
-### `moon`
-
-Stores moons and connects each moon to a planet.
-
-Key fields include:
-
-* `moon_id` — Primary Key
-* `name` — Unique moon name
-* `planet_id` — Foreign Key → `planet.planet_id`
-* `diameter_km`
-* `is_spherical`
-* `description`
-
-### `constellation`
-
-An additional table containing basic constellation information.
-
-Key fields include:
-
-* `constellation_id` — Primary Key
-* `name` — Unique constellation name
-* `abbreviation`
+The `constellation` table is an additional table created to meet the project requirements.
 
 ## Sample Data
 
@@ -121,7 +139,7 @@ The completed database contains:
 | `moon`          |      20 |
 | `constellation` |       3 |
 
-Example relationship:
+An example of the relationships represented by the sample data is:
 
 ```text
 Milky Way
@@ -142,33 +160,9 @@ Milky Way
         └── ...
 ```
 
-## SQL Concepts Practiced
+## SQL Example: Multi-Table JOIN
 
-Through this project, I practiced:
-
-* Creating PostgreSQL databases and tables
-* Relational database design
-* Primary keys
-* Foreign keys
-* One-to-many relationships
-* `NOT NULL` constraints
-* `UNIQUE` constraints
-* Auto-incrementing IDs / sequences
-* PostgreSQL data types including:
-
-  * `INTEGER`
-  * `VARCHAR`
-  * `TEXT`
-  * `NUMERIC`
-  * `BOOLEAN`
-* Inserting and querying relational data
-* Joining multiple tables
-* Sorting query results with `ORDER BY`
-* Exporting and restoring PostgreSQL databases using `pg_dump` and `psql`
-
-## Example: Multi-Table JOIN
-
-One of the most useful exercises was querying information distributed across several related tables.
+One of the most useful exercises in this project was querying information distributed across several related tables.
 
 For example:
 
@@ -188,11 +182,11 @@ JOIN galaxy
 ORDER BY galaxy.name, star.name, planet.name, moon.name;
 ```
 
-This answers the question:
+This query answers the question:
 
 > For each moon, which planet does it belong to, which star does that planet belong to, and which galaxy does that star belong to?
 
-For example:
+Example relationships returned by the query include:
 
 ```text
 Moon    → Earth   → Sun → Milky Way
@@ -202,17 +196,29 @@ Titan   → Saturn  → Sun → Milky Way
 Triton  → Neptune → Sun → Milky Way
 ```
 
-This helped me understand how foreign-key relationships can be followed across multiple tables to turn stored IDs into useful, human-readable information.
+This demonstrates how foreign key relationships can be followed across multiple tables to transform stored identifiers into useful, human-readable information.
 
-## Project File
+## Technologies
+
+* PostgreSQL
+* SQL
+* `psql`
+* `pg_dump`
+* Git
+* GitHub
+* VS Code
+
+## Project Files
 
 ```text
-project-01-lab-celestial-bodies-database/
-├── README.md
-└── universe.sql
+celestial-bodies-database/
+├── universe.sql
+└── README.md
 ```
 
-`universe.sql` is a PostgreSQL database dump containing the database schema, constraints, relationships, sequences, and sample data.
+### `universe.sql`
+
+PostgreSQL database dump containing the database schema, constraints, relationships, sequences, and sample data.
 
 ## Running Locally
 
@@ -221,21 +227,23 @@ project-01-lab-celestial-bodies-database/
 * PostgreSQL
 * `psql`
 
-### Restore the database
+### Restore the Database
 
-From the project directory:
+From the project directory, restore the database using:
 
 ```bash
 psql -U postgres < universe.sql
 ```
 
-The dump was generated locally using:
+The database dump was generated locally using:
 
 ```bash
 pg_dump -cC --inserts -U postgres universe > universe.sql
 ```
 
-> Note: freeCodeCamp's development environment uses the `freecodecamp` PostgreSQL user. This local version uses the default `postgres` user instead.
+> **Note:** freeCodeCamp's development environment uses the `freecodecamp` PostgreSQL user. This local version uses the default `postgres` user instead.
+
+### Connect to the Database
 
 After restoring the database, connect using:
 
@@ -243,7 +251,7 @@ After restoring the database, connect using:
 psql -U postgres -d universe
 ```
 
-Then inspect the tables:
+Then inspect the available tables:
 
 ```sql
 \dt
@@ -251,35 +259,49 @@ Then inspect the tables:
 
 ## What I Learned
 
-The biggest takeaway from this project was understanding that relational databases are not just about storing information in separate tables — the relationships between those tables are what make the data useful.
+Through this project, I practiced:
 
-For example, the `moon` table does not need to store the name of its planet, star, and galaxy. It only stores the `planet_id`. From there, the relationships can be followed:
+* Creating PostgreSQL databases and tables
+* Designing relational database structures
+* Defining primary and foreign keys
+* Creating one-to-many relationships
+* Applying `NOT NULL` and `UNIQUE` constraints
+* Working with auto-incrementing IDs and sequences
+* Using PostgreSQL data types including `INTEGER`, `VARCHAR`, `TEXT`, `NUMERIC`, and `BOOLEAN`
+* Inserting and querying relational data
+* Joining related tables with SQL `JOIN`
+* Following foreign key relationships across multiple tables
+* Sorting query results with `ORDER BY`
+* Exporting and restoring PostgreSQL databases using `pg_dump` and `psql`
+
+## Key Takeaway
+
+The main lesson from this project was understanding that relational databases are not just about storing information in separate tables — the relationships between those tables are what make the data useful.
+
+For example, the `moon` table does not need to store the name of its planet, star, and galaxy. It only needs to reference its associated planet through `planet_id`.
+
+The relationships can then be followed through the database:
 
 ```text
 moon.planet_id
         ↓
 planet.planet_id
-
-planet.star_id
-        ↓
-star.star_id
-
-star.galaxy_id
-        ↓
-galaxy.galaxy_id
+        │
+        └── planet.star_id
+                    ↓
+              star.star_id
+                    │
+                    └── star.galaxy_id
+                                ↓
+                        galaxy.galaxy_id
 ```
 
-Using `JOIN`, I can bring those relationships together when I actually need the information.
+Using SQL joins, these relationships can be combined whenever the information is needed.
 
-This project also helped reinforce the difference between primary keys and foreign keys, why foreign keys do not need to be unique, and how database constraints help maintain data integrity.
+This project reinforced the difference between primary and foreign keys, why foreign keys do not need to be unique, how one-to-many relationships work, and how database constraints help maintain data integrity.
 
-## Source
+## Acknowledgements
 
-This project is based on the **Build a Celestial Bodies Database** lab from the freeCodeCamp Relational Databases curriculum.
+Project completed as part of freeCodeCamp's **Relational Database** curriculum.
 
-* freeCodeCamp — Build a Celestial Bodies Database
-* Recreated locally using PostgreSQL and VS Code
-
-## Disclaimer
-
-This repository is part of my personal learning portfolio. The project structure and requirements are based on freeCodeCamp's curriculum, while the local implementation, documentation, and learning notes reflect my own practice and understanding.
+The project requirements were provided by freeCodeCamp. The database was later recreated locally using PostgreSQL and VS Code as part of my personal learning portfolio.

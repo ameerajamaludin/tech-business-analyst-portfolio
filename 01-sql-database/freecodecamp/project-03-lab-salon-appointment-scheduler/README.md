@@ -11,7 +11,7 @@ The goal of this project was to build a simple appointment scheduling system whi
 The project involves:
 
 * Designing a relational database for salon services, customers, and appointments
-* Creating primary and foreign key relationships
+* Defining primary and foreign key relationships
 * Retrieving database records through Bash
 * Accepting and validating user input
 * Registering new customers
@@ -20,7 +20,7 @@ The project involves:
 
 ## Database Structure
 
-The database contains three main tables:
+The database contains three tables:
 
 ### `services`
 
@@ -54,6 +54,8 @@ Stores scheduled salon appointments.
 
 ## Database Relationships
 
+The `appointments` table connects customers and services through foreign keys:
+
 ```text
 customers
 └── customer_id (PK)
@@ -66,9 +68,11 @@ services
         └────< appointments.service_id (FK)
 ```
 
-A customer can have multiple appointments, and a service can be associated with multiple appointments.
+A customer can have multiple appointments, while each appointment belongs to one customer.
 
-The `appointments` table connects customers and services through foreign keys.
+A service can also be associated with multiple appointments, while each appointment references one service.
+
+This allows customer and service information to be stored separately and reused across multiple appointment records.
 
 ## How It Works
 
@@ -88,7 +92,42 @@ When `salon.sh` is executed, the application follows this booking flow:
 
 If an invalid service is selected, the application returns the user to the service menu.
 
+The overall application flow can be represented as:
+
+```text
+Start
+  │
+  ↓
+Display services
+  │
+  ↓
+Select service
+  │
+  ├── Invalid ──→ Display services again
+  │
+  ↓
+Enter phone number
+  │
+  ↓
+Search for customer
+  │
+  ├── New customer ──→ Enter name ──→ Create customer
+  │
+  └── Returning customer
+  │
+  ↓
+Enter appointment time
+  │
+  ↓
+Create appointment
+  │
+  ↓
+Display confirmation
+```
+
 ## Example Interaction
+
+An example booking for a new customer:
 
 ```text
 ~~~~~ MY SALON ~~~~~
@@ -115,11 +154,13 @@ What time would you like your Cut, Jane?
 I have put you down for a Cut at 10:30, Jane.
 ```
 
-Returning customers do not need to provide their name again because the application retrieves their customer record using their phone number.
+Returning customers do not need to provide their name again because the application retrieves their existing customer record using their phone number.
 
 ## Bash and PostgreSQL Integration
 
 The Bash application communicates with PostgreSQL using the `psql` command-line interface.
+
+The connection command is stored in a Bash variable:
 
 ```bash
 PSQL="psql --username=freecodecamp --dbname=salon -t --no-align -c"
@@ -131,7 +172,24 @@ SQL queries can then be executed directly from the script:
 SERVICES=$($PSQL "SELECT service_id, name FROM services ORDER BY service_id;")
 ```
 
-This allows the application to dynamically retrieve and modify database records based on user input.
+This allows the Bash application to retrieve and modify PostgreSQL records dynamically based on user input.
+
+The application can therefore be viewed as two connected layers:
+
+```text
+Bash Application
+    │
+    ├── User input
+    ├── Application logic
+    └── Output
+          │
+          ↓
+PostgreSQL Database
+    │
+    ├── services
+    ├── customers
+    └── appointments
+```
 
 ## Technologies
 
@@ -187,11 +245,29 @@ Through this project, I practiced:
 
 ## Key Takeaway
 
-This project helped demonstrate how a relational database can support application logic rather than being used only for standalone SQL queries.
+The main lesson from this project was understanding how a relational database can support application logic rather than being used only for standalone SQL queries.
 
-The Bash script acts as the application layer, while PostgreSQL stores and manages persistent data about services, customers, and appointments.
+The Bash script acts as the application layer, handling user interaction and the booking process, while PostgreSQL stores persistent information about services, customers, and appointments.
 
-Separating these entities into related tables reduces unnecessary duplication and allows appointments to reference existing customers and services through foreign keys.
+Instead of storing all booking information together, the database separates the entities into related tables:
+
+```text
+customers
+    │
+    └── customer_id
+            ↓
+       appointments
+            ↑
+    ┌── service_id
+    │
+services
+```
+
+An appointment therefore does not need to duplicate the customer's name, phone number, or service name. It references the corresponding customer and service records through foreign keys.
+
+This reduces unnecessary duplication and allows existing customer and service records to be reused across multiple appointments.
+
+This project helped reinforce how **relational database design, SQL queries, Bash scripting, user input, and application logic can work together in a simple interactive application**.
 
 ## Acknowledgements
 
