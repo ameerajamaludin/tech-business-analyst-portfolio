@@ -2,10 +2,9 @@
 
 ## Overview
 
-This case study is an independent SQL project designed to apply the database and analytical skills from:
+This case study is an independent SQL project designed to apply the database and analytical skills for:
 
-* freeCodeCamp's Relational Database
-* DataCamp's SQL for Business Analysts
+* for Relational Database Management System (RDBMS)
 
 Rather than following a guided tutorial, this project uses a simulated e-commerce database and a series of progressively more complex business questions.
 
